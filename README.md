@@ -16,7 +16,7 @@ react-native link react-native-image-resizer
 React-Native < 0.29.2
 ```
 npm install rnpm -g
-rnpm install react-native-image-resizer
+rnpm install https://github.com/leonacky/react-native-image-resizer.git
 ```
 
 ### Android
