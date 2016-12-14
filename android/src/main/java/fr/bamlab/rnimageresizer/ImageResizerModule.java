@@ -2,6 +2,7 @@ package fr.bamlab.rnimageresizer;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Log;
 
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -52,6 +53,6 @@ class ImageResizerModule extends ReactContextBaseJavaModule {
         String resizedImagePath = ImageResizer.createResizedImage(this.context, imagePath, newWidth,
                 newHeight, compressFormat, quality, rotation, outputPath);
 
-        successCb.invoke("file:" + resizedImagePath);
+        successCb.invoke(resizedImagePath);
     }
 }

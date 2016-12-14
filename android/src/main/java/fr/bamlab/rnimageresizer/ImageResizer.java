@@ -13,6 +13,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Base64;
+import android.util.Log;
 import android.util.Pair;
 
 import java.io.Closeable;
@@ -285,7 +286,7 @@ class ImageResizer {
         }
 
         // Save the resulting image
-        File path = context.getCacheDir();
+        File path = StorageUtils.getCacheDirectory(context);
         if (outputPath != null) {
             path = new File(outputPath);
         }
