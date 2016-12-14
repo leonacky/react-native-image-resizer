@@ -9,7 +9,7 @@ Install the package:
 React-Native 0.29.2+
 
 ```
-npm install --save react-native-image-resizer
+npm install --save https://github.com/leonacky/react-native-image-resizer.git
 react-native link react-native-image-resizer
 ```
 
