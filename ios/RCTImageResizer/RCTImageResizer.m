@@ -7,7 +7,7 @@
 
 #include "RCTImageResizer.h"
 #include "ImageHelpers.h"
-#import "RCTImageLoader.h"
+#import <React/RCTImageLoader.h>
 
 @implementation ImageResizer
 
@@ -125,6 +125,8 @@ RCT_EXPORT_METHOD(createResizedImage:(NSString *)path
             callback(@[@"Can't resize the image.", @""]);
             return;
         }
+        
+        NSString * imageBase64 = [UIImagePNGRepresentation(scaledImage) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
 
         // Compress and save the image
         if (!saveImage(fullPath, scaledImage, format, quality)) {
@@ -132,7 +134,12 @@ RCT_EXPORT_METHOD(createResizedImage:(NSString *)path
             return;
         }
         
-        callback(@[[NSNull null], fullPath]);
+        NSDictionary *dataImage = @{
+                                    @"base64": imageBase64,
+                                    @"path": fullPath
+                                    };
+        
+        callback(@[[NSNull null], dataImage]);
     }];
 }
 

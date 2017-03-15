@@ -2,13 +2,18 @@ package fr.bamlab.rnimageresizer;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.util.Log;
 
+import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.WritableMap;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 /**
@@ -52,7 +57,19 @@ class ImageResizerModule extends ReactContextBaseJavaModule {
 
         String resizedImagePath = ImageResizer.createResizedImage(this.context, imagePath, newWidth,
                 newHeight, compressFormat, quality, rotation, outputPath);
-
-        successCb.invoke(resizedImagePath);
+        String base64 = "";
+        try {
+            Bitmap bm = BitmapFactory.decodeFile(resizedImagePath);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bm.compress(Bitmap.CompressFormat.JPEG, 100, baos); //bm is the bitmap object
+            byte[] b = baos.toByteArray();
+            base64 = Base64.encodeToString(b, Base64.DEFAULT);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        WritableMap imageData = Arguments.createMap();
+        imageData.putString("path", resizedImagePath);
+        imageData.putString("base64", base64);
+        successCb.invoke(imageData);
     }
 }
