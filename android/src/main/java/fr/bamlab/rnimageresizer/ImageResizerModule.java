@@ -42,7 +42,7 @@ class ImageResizerModule extends ReactContextBaseJavaModule {
         try {
             createResizedImageWithExceptions(imagePath, newWidth, newHeight, compressFormat, quality,
                     rotation, outputPath, successCb, failureCb);
-        } catch (IOException e) {
+        } catch (Exception e) {
             failureCb.invoke(e.getMessage());
         }
     }
@@ -51,7 +51,7 @@ class ImageResizerModule extends ReactContextBaseJavaModule {
                                            String compressFormatString, int quality, int rotation, String outputPath,
                                            final Callback successCb, final Callback failureCb) throws IOException {
         Bitmap.CompressFormat compressFormat = Bitmap.CompressFormat.valueOf(compressFormatString);
-        if (imagePath.indexOf("data:image/") < 0) {
+        if (imagePath!=null && imagePath.indexOf("data:image/") < 0) {
             imagePath = imagePath.replace("file:", "");
         }
 
